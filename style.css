@@ -1,0 +1,296 @@
+/*  
+WordPress Theme Development Checklist Tool
+
+Design (c) 2010 Hafiz Rahman
+http://wplover.com/
+
+*/
+
+/* Eric Meyer's Reset CSS with modifications.
+ * --------------------------------------------------------------------------------------- */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+  }
+ol, ul {
+	list-style: none;
+  }
+blockquote, q {
+	quotes: none;
+  }
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+  }
+
+/* @ Base HTML
+ * --------------------------------------------------------------------------------------- */  
+body {
+	font-size: 62.5%;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;	
+  color: #464646;
+  background: #f1f2ed;
+  } 
+  
+a {
+  color: #000;
+  }
+  
+p {
+  margin-bottom: 1.5em;
+  }
+
+code {
+  font-family: Consolas, monospace;
+  font-size: 0.9em;
+  }  
+  
+#header-container {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background:url("body.png") repeat-x left -5px fixed;
+  min-height: 200px;
+  }
+  
+#header {
+  width: 958px;
+  margin: 0 auto;
+  position: relative;
+  padding-bottom: 10px;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #fff;
+  border-bottom: 4px double #fff;    
+  }
+
+
+#desc {
+  font-size: 1.8em;
+  padding: 5px 10px;
+  }
+
+#desc span {
+  font-weight: bold;
+  color: #78270e;
+  text-shadow: 0 1px 0 #eee;
+  background: rgba(150,150,0,0.2);
+  padding: 5px 10px;
+  }
+  
+#desc em {
+  font-family: Georgia, serif;
+  }
+  
+#desc .inputbox {
+  border-width: 0;
+  }
+  
+#desc p {
+  font-weight: normal;
+  margin: 10px 0 -10px;
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 0.8em;
+  display: none;
+  }
+  
+#progress {
+  width: 300px;
+  height: 97px;
+  background: url("pro-m.png") left top no-repeat;
+  position: absolute;
+  top: 0;
+  right: 10px;
+  }
+  
+#progress p {
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+  font-size: 3em;
+  letter-spacing: -1px;
+  text-shadow: 2px 2px 0px #000;
+  margin-top: 40px;
+  padding-left: 95px;
+  rotation: -2deg !important;
+  /* ** Hacks ** */
+  -webkit-transform: rotate(-2deg);
+  -moz-transform: rotate(-2deg);  
+  }
+  
+#container {
+  width: 960px;
+  margin: 150px auto 0; 
+  border-left: 1px solid #fff;
+  border-right: 1px solid #fff;
+  }
+  
+.grid {
+  background: url("grid.png") left top repeat-y; 
+  position: relative;
+  z-index: -2;  
+  }
+ 
+h1 {
+  font-size: 4em;
+  letter-spacing: -2px;
+  padding: 5px 10px 0;
+  color: #21759b;
+  border-bottom: 1px dotted #fff;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 0px #fff;
+  color: #333;
+  text-indent: -999em;
+  background: url("h1.png") 10px 20px no-repeat;
+  }
+  
+h2 {
+  font-size: 2.4em;
+  letter-spacing: -1px;
+  font-weight: normal;
+  margin: 30px 0 5px;
+  font-family: Georgia, serif;
+  color: #000;
+  padding: 3px 10px;
+  border-bottom: 1px solid #fff;
+  border-top: 1px solid #fff;
+  border-top: 4px double #fff;  
+  }
+  
+h2 span {
+  font-size: 0.8em;
+  padding: 5px;
+  }
+  
+h3 {
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #333;
+  padding: 9px 10px 5px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 0px #fff;
+  }
+ 
+h4 {
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #777;
+  padding: 5px 10px 5px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 0px #fff;
+  margin-top: 10px;
+  }
+
+
+#content ul {
+  font-size: 2em;
+  width: 960px;
+  font-family: Georgia, serif;
+  border-top: 3px solid #333;
+  border-bottom: 1px dotted #999;   
+  margin-bottom: 5px;
+  }
+  
+p#down {
+  text-align: center;
+  font-style: italic;
+  font-size: 1.3em !important;
+  font-family: Georgia, serif;
+  color: #000;
+  margin-bottom: -10px !important;
+  }
+  
+p#down a {
+  display: block;
+  width: 277px;
+  margin: 0 auto;
+  }
+  
+#content li {
+  padding: 5px 60px 5px 60px;
+  background: #eaeae0;
+  }
+  
+#content li.alt {
+  background: #fff;
+  }
+
+#content input {
+  float: left;
+  margin-top: 8px;
+  margin-left: -35px;
+  }
+
+#content pre {
+  display: block;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  border: 1px solid #fff;
+  background: #f5f5f5;
+  padding: 5px;
+  font-size: 0.8em;
+  }
+  
+#content p {
+  font-size: 1.6em;
+  padding: 10px 10px 0 10px;
+  margin-bottom: 0;
+  }
+
+#footer {
+  font-size: 1.2em;
+  width: 960px;
+  margin: 20px auto 0;
+  padding: 10px 0 0;
+  color: #000;
+  border-top: 1px dotted #666;
+  }
+  
+#footer .col {
+  float: left;
+  width: 470px;
+  margin-left: 10px;
+  margin-bottom: -10px;
+  }
+  
+#footer #credits { 
+  text-align: right;
+  padding-right: 10px; 
+  width: 460px;
+  }
+  
+/* @ Float Clearing
+ * --------------------------------------------------------------------------------------- */    
+
+.clearfloat:after {
+	display: block;
+	visibility: hidden;
+	clear: both;
+	height: 0;
+	content: ".";
+	}
+	
+.clearfloat {
+	display: inline-block;
+	}
+
+.clearfloat {
+	display: block;
+	}  
+  

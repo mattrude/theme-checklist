@@ -1,0 +1,500 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US"> 
+ 
+<head profile="http://gmpg.org/xfn/11"> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+ 
+<title>WordPress Theme Development Checklist</title> 
+ 
+<meta name="description" content="WordPress Theme Development Checklist" /> 
+ 
+ 
+<link rel="stylesheet" href="style.css" type="text/css" media="screen,projection" /> 
+
+<script language="javascript" type="text/javascript" src="js/jquery-1.4.min.js"></script> 
+<script language="javascript" type="text/javascript" src="js/jquery.hotkeys-0.7.9.js"></script> 
+ 
+<script type="text/javascript"> 
+  jQuery(document).ready(function($){
+    
+    // Checkbox functions
+    $("#total-list").text($("#content :input").size() );
+    
+    $("#content :input").click(function() {
+      $("#current-count").text($("#content :input:checked").size() );
+    });
+
+    //Edit in place for theme name/version/author
+    //From: http://www.unleashed-technologies.com/blog/2010/01/13/jquery-javascript-easy-edit-place-input-boxes-and-select-boxes
+    $("span.edit-me").click(function() {
+      //Create the HTML to insert into the div. Escape any " characters 
+      var inputbox = "<input type='text' class='inputbox' value=\""+$(this).text()+"\">";
+
+      //Insert the HTML into the div
+      $(this).html(inputbox);
+      
+      //Immediately give the input box focus. The user
+      //will be expecting to immediately type in the input box,
+      //and we need to give them that ability
+      $("input.inputbox").focus();
+      
+      //Once the input box loses focus, we need to replace the
+      //input box with the current text inside of it.
+      $("input.inputbox").blur(function() {
+        var value = $(this).val();
+        $(this).parent().text(value);
+      });
+    });
+    // Grid JS
+    $(document).bind('keydown', 'Alt+Shift+g', function(){
+      $("div#container").toggleClass("grid");
+    });    
+  });
+</script>
+
+</head> 
+ 
+<body>
+<div id="header-container">
+  <div id="header">
+    <h1>Theme Development Checklist</h1>
+    <div id="desc">
+      <span class="edit-me">Theme Name</span>* <em>ver.</em> <span class="edit-me">1.0</span>* <em>by</em> <span class="edit-me">Your Name Here</span>*
+      <p>* Click on the labels to change them to your own.</p>
+    </div>
+    
+    <div id="progress">
+      <p><span id="current-count">0</span> / <span id="total-list">100</span></p>
+    </div>
+  </div>
+</div> <!-- #header-container -->
+
+<div id="container" class="clearfloat">    
+  <div id="content">
+  
+    <h2>1. Development & Coding</h2>  
+    <h3>Header</h3> 
+    <ul>
+      <li><input type="checkbox" />Check for proper DOCTYPE</li>
+      <li class="alt"><input type="checkbox" />Is there a <code>wp_head()</code> call?</li>
+      <li><input type="checkbox" /><code>&lt;html&gt;</code> tag should include <code>language_attributes()</code></li>
+      <li class="alt"><input type="checkbox" />Is there a feed autodiscovery <code>link?</code></li>
+      <li><input type="checkbox" />Are you fetching the title and description using <code>bloginfo()</code>?</li>
+    </ul>
+    
+    <h3>Footer</h3> 
+    <ul>
+      <li><input type="checkbox" />Is there a <code>wp_footer()</code> call?</li>
+    </ul>
+
+    <h3>Error Handling</h3> 
+    <ul>
+      <li><input type="checkbox" />Do you have a 404 page?</li>
+      <li class="alt"><input type="checkbox" />Is your search page helpful? (Navigate to http://yoursite.com?s=TestSearchOut to test)</li>
+    </ul>
+
+    <h3>Syntax &amp; File Handling</h3> 
+    <h4>&rarr; svn</h4>
+    <ul>
+      <li><input type="checkbox" />If you're using svn, are your files set eol-style:native?
+      <pre>find . -name \*.php -exec svn propset svn:eol-style native {} \;
+find . -name \*.css -exec svn propset svn:eol-style native {} \;</pre>
+      </li>
+    </ul>
+
+    <h4>&rarr; JavaScript</h4>
+    <ul>
+      <li><input type="checkbox" />Is JavaScript CDATA encoded?
+    <pre>&lt;script type="text/javascript"&gt;
+/* &lt;![CDATA[ */
+// content of your Javascript goes here
+/* ]]&gt; */
+&lt;/script&gt;</pre>
+      </li>
+      <li class="alt"><input type="checkbox" />Are you using <code>wp_enqueue_script</code>?</li> 
+    </ul>      
+
+    <h2>2. Formatting, Function, and Logic</h2>  
+    <ul>
+      <li><input type="checkbox" />Are posts in the right order (front page and archive pages)?</li>
+      <li class="alt"><input type="checkbox" />Are the correct number of posts showing (as set in reading settings)?</li>
+      <li><input type="checkbox" />Are sticky posts styled and functioning correctly?</li>
+      <li class="alt"><input type="checkbox" />Does the theme have pages tabs in the header? If so, do they overflow or have problems with child pages?</li>
+    </ul>
+    
+    <h3>Navigation</h3> 
+    <ul>
+      <li><input type="checkbox" />Do front, archive, and single pages paginate correctly? Do they show the correct number of posts?</li>
+      <li class="alt"><input type="checkbox" />Posts, pages, and index should include <code>wp_link_pages</code></li>
+    </ul>
+
+    <h3>Widgets</h3>
+    <ul>
+      <li><input type="checkbox" />Is the theme widgetized as fully as possible?</li>
+      <li class="alt"><input type="checkbox" />Does the theme require custom widgets?</li>
+      <li><input type="checkbox" />Do the current widgets look correct?</li>
+      <li class="alt"><input type="checkbox" />Are standard widgets setup? Should they be?</li>
+      <li><input type="checkbox" />Do any standard widgets need to be overridden?</li>
+    </ul>
+
+    <h3>Pages</h3> 
+    <ul>
+      <li><input type="checkbox" />Are comments enabled for pages?</li>
+    </ul>
+
+    <h3>Posts</h3>
+    <ul>
+      <li><input type="checkbox" />Does the page function correctly when logged in as an administrator compared to a normal user? (Example: do "Edit post" links work).</li>
+      <li class="alt"><input type="checkbox" />Are the date and time format options are respected (unless it's important to the design)?</li>
+      <li><input type="checkbox" />Stylings: Tables</li>
+      <li class="alt"><input type="checkbox" />Stylings: Captions</li>
+      <li><input type="checkbox" />Stylings: Unordered lists</li>
+      <li class="alt"><input type="checkbox" />Stylings: Ordered lists</li>
+      <li><input type="checkbox" />Stylings: Blockquotes a) Make sure quotes are indented and display correctly.</li>        
+      <li class="alt"><input type="checkbox" />Stylings: Blockquotes b) If the theme uses a background image or quote symbol, make sure it looks ok on both short and long quotes.</li>
+    </ul>
+    
+    <h3>Multiple Page Posts</h3>
+    <ul>
+      <li><input type="checkbox" />Are Page links displayed and formatted appropriately?</li>
+      <li class="alt"><input type="checkbox" />Do Page links work?</li>
+    </ul>  
+
+    <h3>The <code>&lt;!--more --&gt;</code> tag</h3>
+    <ul>
+      <li><input type="checkbox" />Does the part of the post before the more tag display on archive / front pages?</li>
+      <li class="alt"><input type="checkbox" />Does the full post appear on the permalink page?</li>
+    </ul> 
+
+    <h3>Enclosures</h3>
+    <ul>
+      <li><input type="checkbox" />Do links for enclosures work properly?</li>
+    </ul>
+
+    <h3>Video</h3>
+    <ul>
+      <li><input type="checkbox" />Do embeded videos look correct?</li>
+      <li class="alt"><input type="checkbox" />Make sure they don't overlap or push the sidebars down (YouTube videos can be resized with a filter in functions.php, see <a href="http://gm22.net/2009/05/08/download-wordpress-fjords-theme/">Fjords theme</a> for an example)</li>
+    </ul> 
+
+    <h3>Images</h3>
+    <ul>
+      <li><input type="checkbox" />Check a post with a picture floated right, left, is there enough space around it? Refer to <a href="http://codex.wordpress.org/Using_Images#Styling_Images_in_WordPress">Using Images: Styling Images in WordPress</a></li>
+      <li class="alt"><input type="checkbox" />Check a post with a picture that is far too big for the content column, does it break the layout? (Perhaps use <code>overflow: hidden;</code>)</li>
+      <li><input type="checkbox" />Is <code>$content_width</code> set?</li>
+      <li class="alt"><input type="checkbox" />Does the gallery shortcode display properly?</li>
+    </ul>
+    
+    <h3>Gravatars</h3>
+    <ul>
+      <li><input type="checkbox" />Are gravatar calls working properly?</li>
+    </ul>
+    
+    <h3>Categories</h3>
+    <ul>
+      <li><input type="checkbox" />Does Category links work?</li>
+      <li class="alt"><input type="checkbox" />Are Categories displayed OK on front page and permalink page?</li>
+      <li><input type="checkbox" />Are nested Categories handled elegantly?</li>
+    </ul>    
+    
+    <h3>Tags</h3>
+    <ul>
+      <li><input type="checkbox" />Does Tag links work?</li>
+      <li class="alt"><input type="checkbox" />Are Tags displayed OK on front page and permalink page?</li>
+      <li><input type="checkbox" />Are Tags and Tag links shown in each post?</li>
+    </ul>
+
+    <h3>Comments</h3>
+    <ul>
+      <li><input type="checkbox" />Are comments displayed correctly?</li>
+      <li class="alt"><input type="checkbox" />Are blockquotes and any applicable HTML styled appropriately?</li>
+      <li><input type="checkbox" />Are author comments highlighted differently?</li>
+      <li class="alt"><input type="checkbox" />Are user avatars displayed correctly?</li>      
+    </ul>
+
+    <h4>&rarr; No comments</h4>
+    <ul>
+      <li><input type="checkbox" />Are no comments shown?</li>
+      <li class="alt"><input type="checkbox" />Is the comment display form replaced with a "Comments Off" message or similar?</li>
+    </ul> 
+
+    <h4>&rarr; Disabled Comments</h4>
+    <ul>
+      <li><input type="checkbox" />Are previous comments still visible?</li>
+      <li class="alt"><input type="checkbox" />Is the comment display form replaced with a "Comments Off" message or similar?</li>
+    </ul>
+
+    <h4>&rarr; Trackbacks</h4>
+    <ul>
+      <li><input type="checkbox" />Are all trackbacks shown correctly without overlap?</li>
+    </ul>      
+
+    <h4>&rarr; Comment Form</h4>
+    <ul>
+      <li><input type="checkbox" />Does comment input form look OK when logged out?</li>
+      <li class="alt"><input type="checkbox" />Does comment input form look OK when logged in?</li>
+      <li><input type="checkbox" />Do comments have Edit links when logged in as blog administrator?</li>      
+      <li class="alt"><input type="checkbox" />Is comment HTML displayed correctly, especially unordered lists and blockquotes?</li>      
+    </ul>    
+
+    <h2>3. Theme Unit Tests</h2>  
+    <p>Download and import the test data here: <a href="http://svn.automattic.com/wpcom-themes/test-data.2008-12-22.xml">WordPress.org Dummy Content</a>. The following tests are to be done on Posts with similar titles.</p>
+    
+    <h3>Posts</h3>     
+    <h4>&rarr; Future Post</h4>
+    <ul>
+      <li><input type="checkbox" />This post should not show anywhere. It's in the future.</li>
+    </ul>     
+
+    <h4>&rarr; Layout Test</h4>
+    <ul>
+      <li><input type="checkbox" />Is the Post showing a "read more" link?</li>
+      <li class="alt"><input type="checkbox" />Is the layout correct on every part of the post?</li>
+    </ul>
+
+    <h4>&rarr; Simple Gallery Test</h4>
+    <ul>
+      <li><input type="checkbox" />Does the gallery look correct?</li>
+      <li class="alt"><input type="checkbox" />Does it look good on front, archive, and single pages?</li>
+    </ul>  
+
+    <h4>&rarr; Category Name Clash</h4>
+    <ul>
+      <li><input type="checkbox" />The post should be in category Foo Parent / Foo A - not in Foo A (no parent).</li>
+    </ul>
+
+    <h4>&rarr; Test with Enclosures</h4>
+    <ul>
+      <li><input type="checkbox" />Do the links work?</li>
+    </ul>     
+
+    <h4>&rarr; Block quotes</h4>
+    <ul>
+      <li><input type="checkbox" />Are the quotes indented and displayed correctly?</li>
+      <li class="alt"><input type="checkbox" />If the theme uses a background image or quote symbol, does it look OK on both short and long quotes?</li>
+      <li><input type="checkbox" />Likewise for the short and long quotes in comments</li>
+    </ul> 
+    
+    <h4>&rarr; Many Categories</h4>
+    <ul>
+      <li><input type="checkbox" />Do Category links work?</li>
+      <li class="alt"><input type="checkbox" />Are Categories displayed OK on front page and permalink page?</li>
+    </ul>
+
+    <h4>&rarr; Many Tags</h4>
+    <ul>
+      <li><input type="checkbox" />Do Tag links work?</li>
+      <li class="alt"><input type="checkbox" />Are Tags displayed OK on front page and permalink page?</li>
+    </ul> 
+
+    <h4>&rarr; Tags A and C / Tags B and C / Tags A and B / Tag C / Tag B / Tag A / Tags A, B, C</h4>
+    <ul>
+      <li><input type="checkbox" />Are Tags and tag links shown in each post?</li>
+      <li class="alt"><input type="checkbox" />Do tag pages work and display the correct posts regardless of privacy settings?</li>
+    </ul>
+
+    <h4>&rarr; Raw HTML code</h4>
+    <ul>
+      <li><input type="checkbox" />Is all markup displayed appropiately?</li>
+      <li class="alt"><input type="checkbox" />Are H1 to H6 consistent?</li>
+      <li><input type="checkbox" />Do tables and lists look ok?</li>      
+    </ul>    
+
+    <h4>&rarr; Simple markup test</h4>
+    <ul>
+      <li><input type="checkbox" />Is all markup displayed appropiately?</li>
+      <li class="alt"><input type="checkbox" />Does text alignment work?</li>
+      <li><input type="checkbox" />Does image alignment work?</li>
+      <li class="alt"><input type="checkbox" />Block elements should remain blocks, not display:inline (and vice versa)</li>
+      <li><input type="checkbox" />Blockquotes should be indented or otherwise distinct from paragraph text.</li> 
+      <li class="alt"><input type="checkbox" />Are nested lists indented correctly?</li>
+    </ul> 
+    
+    <h4>&rarr; Embedded Video</h4>
+    <ul>
+      <li><input type="checkbox" />Does embedded video work?</li>
+      <li class="alt"><input type="checkbox" />Make sure they don't overlap or push the sidebars down (YouTube videos can be resized with a filter in functions.php, see <a href="http://gm22.net/2009/05/08/download-wordpress-fjords-theme/">Fjords theme</a> for an example)</li>
+    </ul> 
+
+    <h4>&rarr; Contributor post, approved</h4>
+    <ul>
+      <li><input type="checkbox" />Is the correct author name displayed?</li>
+    </ul>   
+
+    <h4>&rarr; Embedded Video</h4>
+    <ul>
+      <li><input type="checkbox" />Does embedded video work?</li>
+      <li class="alt"><input type="checkbox" />Make sure they don't overlap or push the sidebars down (YouTube videos can be resized with a filter in functions.php, see <a href="http://gm22.net/2009/05/08/download-wordpress-fjords-theme/">Fjords theme</a> for an example)</li>
+    </ul>    
+    
+    <h4>&rarr; One comment</h4>
+    <ul>
+      <li><input type="checkbox" />Is comment displayed correctly?</li>
+      <li class="alt"><input type="checkbox" />Does comment input form look OK when logged out?</li>
+      <li><input type="checkbox" />Does comment input form look OK when logged in?</li>
+      <li class="alt"><input type="checkbox" />Do comments have Edit links when logged in as blog administrator?</li>      
+      <li><input type="checkbox" />Is comment HTML displayed correctly, especially unordered lists and blockquotes?</li>      
+    </ul>
+
+    <h4>&rarr; No comments</h4>
+    <ul>
+      <li><input type="checkbox" />Are no comments shown?</li>
+      <li class="alt"><input type="checkbox" />Is the comment display form replaced with a "Comments Off" message or similar?</li>
+    </ul> 
+
+    <h4>&rarr; Many Trackbacks</h4>
+    <ul>
+      <li><input type="checkbox" />Are all trackbacks shown correctly without overlap?</li>
+    </ul>
+
+    <h4>&rarr; One Trackback</h4>
+    <ul>
+      <li><input type="checkbox" />Is trackback shown correctly without overlapping anything else?</li>
+    </ul>   
+
+    <h4>&rarr; Comment test</h4>
+    <ul>
+      <li><input type="checkbox" />Are comments displayed correctly?</li>
+      <li class="alt"><input type="checkbox" />Is author comment highlighted differently?</li>
+      <li><input type="checkbox" />Are user avatars displayed correctly?</li>
+    </ul>
+    
+    <h4>&rarr; A post with multiple pages</h4>
+    <ul>
+      <li><input type="checkbox" />Are page links displayed and formatted appropriately?</li>
+      <li class="alt"><input type="checkbox" />Do Page links work?</li>
+      <li><input type="checkbox" />Does each page looks OK?</li>
+    </ul>
+
+    <h4>&rarr; An article with a More tag</h4>
+    <ul>
+      <li><input type="checkbox" />Is "more" link shown on non-permalink pages?</li>
+      <li class="alt"><input type="checkbox" />Is full post shown on permalink page?</li>
+    </ul> 
+
+    <h4>&rarr; Cat C / Cat B / Cat A / Cats A and C / Cats B and C / Cats A and B / Cats A, B, C</h4>
+    <ul>
+      <li><input type="checkbox" />Are Categories and category links shown in each post?</li>
+      <li class="alt"><input type="checkbox" />Do category pages work and display the correct posts regardless of privacy settings?</li>
+    </ul>  
+
+    <h4>&rarr; This post has no body</h4>
+    <ul>
+      <li><input type="checkbox" />Post should display fine regardless.</li>
+    </ul> 
+
+    <h4>&rarr; http://yoursite.com/2007/09/04/14/ ("This post has no title")</h4>
+    <ul>
+      <li><input type="checkbox" />There should be a clickable permalink on http://yoursite.com/page/3/</li>
+      <li class="alt"><input type="checkbox" />Does the Post still display fine?</li>
+    </ul>
+
+    <h4>&rarr; Protected: Test with secret password and excerpt / Protected: Test with secret password</h4>
+    <ul>
+      <li><input type="checkbox" />Password input form should display OK.</li>
+      <li class="alt"><input type="checkbox" />Post should be displayed when the password is entered ("secret").</li>
+      <li><input type="checkbox" />Password entry should work both from the permalink page and the list page http://yourblog.com/page/3/</li>
+    </ul>  
+
+    <h4>&rarr; Image align test</h4>
+    <ul>
+      <li><input type="checkbox" />Images should be aligned left and right without overlap.</li>
+      <li class="alt"><input type="checkbox" />Images shouldn't have a border unless it's part of the design.</li>
+    </ul> 
+
+    <h4>&rarr; Test with thumbnails</h4>
+    <ul>
+      <li><input type="checkbox" />Thumbnails should look ok and not overlap.</li>
+      <li class="alt"><input type="checkbox" />Thumbnails shouldn't have a border unless it's part of the design.</li>
+    </ul>      
+
+    <h4>&rarr; Test with wide image resized</h4>
+    <ul>
+      <li><input type="checkbox" />Image should display OK.</li>
+      <li class="alt"><input type="checkbox" />Image shouldn't overlap sidebars.</li>
+    </ul>
+
+    <h4>&rarr; Test with wide image</h4>
+    <ul>
+      <li><input type="checkbox" />Image should display OK.</li>
+      <li class="alt"><input type="checkbox" />No border unless it's part of the design.</li>
+      <li><input type="checkbox" />Sidebar overlap should be handled appropriately (scrolling or <code>overflow: hidden</code>).</li>
+      <li class="alt"><input type="checkbox" />Sidebar must not be pushed to the bottom of the page on either the list view or permalink view.</li>      
+    </ul>
+
+    <h4>&rarr; Test with image</h4>
+    <ul>
+      <li><input type="checkbox" />Image should display OK.</li>
+      <li class="alt"><input type="checkbox" />No border unless it's part of the design.</li>
+    </ul> 
+    
+    <h4>&rarr; Post with categories</h4>
+    <ul>
+      <li><input type="checkbox" />Categories should display OK.</li>
+    </ul>  
+
+    <h4>&rarr; GMT+10 test post / GMT test post / GMT-6 test post / Article in the distant past</h4>
+    <ul>
+      <li><input type="checkbox" />Timestamps should be correct.</li>
+      <li class="alt"><input type="checkbox" />Date/Time format options should be respected.</li>
+    </ul>
+    
+    <h4>&rarr; Draft Post</h4>
+    <ul>
+      <li><input type="checkbox" />Should not be visible, since it is in draft mode.</li>
+    </ul> 
+
+    <h4>&rarr; Draft post with file attached</h4>
+    <ul>
+      <li><input type="checkbox" />Should not be visible, since it is in draft mode.</li>
+      <li class="alt"><input type="checkbox" />Image should be attached.</li>
+    </ul>
+
+    <h4>&rarr; Contributor post, pending approval</h4>
+    <ul>
+      <li><input type="checkbox" />Should not be visible.</li>
+      <li class="alt"><input type="checkbox" />Should say: This post is awaiting review, or similar.</li>
+    </ul>  
+
+    <h3>Pages</h3>
+    <h4>&rarr; About / Lorem Ipsum</h4>
+    <ul>
+      <li><input type="checkbox" />Long and short pages - check that they display OK.</li>
+      <li class="alt"><input type="checkbox" />Comments should be enabled on both.</li>
+      <li><input type="checkbox" />Tags and Categories should not be displayed - make sure there isn't a left-over placeholder for them.</li>
+    </ul>
+
+    <h4>&rarr; Page with comments</h4>
+    <ul>
+      <li><input type="checkbox" />Comments should be enabled.</li>
+      <li class="alt"><input type="checkbox" />Comments should be displayed correctly (see notes above about author comment and avatars).</li>
+    </ul>  
+
+    <h4>&rarr; Page with comments disabled</h4>
+    <ul>
+      <li><input type="checkbox" />Comments should be disabled.</li>
+      <li class="alt"><input type="checkbox" />There should not be a "comments disabled" message.</li>
+      <li><input type="checkbox" />This is a very short page, check that the layout is OK.</li>
+    </ul> 
+
+    <h4>&rarr; Parent page / Child page 1 / Child page 2</h4>
+    <ul>
+      <li><input type="checkbox" />Optional bonus points for displaying the parent and/or child when viewing each of these.</li>
+    </ul>    
+      
+  </div> <!-- #content -->
+</div>
+
+  
+<div id="footer" class="clearfloat">
+  <div class="col">
+    <p>The contents for this checklist are taken from <a href="http://codex.wordpress.org/Theme_Development_Checklist">The Codex</a>.</p>
+  </div>
+
+  <div class="col" id="credits">
+    <p>Design by <a href="http://wplover.com/">Hafiz Rahman</a></p>
+  </div>
+</div>
+
+</body> 
+</html>
